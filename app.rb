@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'twilio-ruby'
 require 'pusher'
+require "sanitize"
 
 before do
   # Setup 
