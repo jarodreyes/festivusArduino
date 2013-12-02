@@ -7,6 +7,8 @@ before do
   Pusher.app_id = ENV['FESTIVUS_APP']
   Pusher.key = ENV['FESTIVUS_KEY']
   Pusher.secret = ENV['FESTIVUS_SECRET']
+  @client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+  @mmsclient = @client.accounts.get(ENV['TWILIO_SID'])
 end
 
 get '/live?*' do
@@ -14,6 +16,7 @@ get '/live?*' do
 end
 
 get '/trick/?' do
+  @phone_number = Sanitize.clean(params[:From])
   output = "Happy Festivus! The festival for the rest of us!"
   begin
     Pusher['festivus_channel'].trigger('starting:', {:message => 'starting up trick'})
@@ -44,13 +47,17 @@ get '/trick/?' do
   if params['SmsSid'] == nil
     erb :index, :locals => {:msg => output}
   else
-    response = Twilio::TwiML::Response.new do |r|
-      r.Sms output
-    end
-    response.text
+    @picture_url = "http://media.egotvonline.com/wp-content/uploads/2011/11/Funny-Portrait_350x446.jpg"
+    message = @mmsclient.messages.create(
+      :from => 'TWILIO',
+      :to => @phone_number,
+      :body => "Happy Festivus from the REST of us!",
+      :media_url => @picture_url,
+    )
+    puts message.to
   end
 end
 
 get '/' do
-  erb :index, :locals => {:msg => "Happy Festivus"}
+  erb :index, :locals => {:msg => "Happy Festivus!"}
 end
