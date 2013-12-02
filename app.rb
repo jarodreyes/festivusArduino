@@ -1,8 +1,8 @@
 require 'sinatra'
 require 'twilio-ruby'
+require 'twilio-ruby/rest/messages'
 require 'pusher'
 require 'sanitize'
-require 'twilio-ruby/rest/messages'
 
 before do
   # Setup 
