@@ -2,6 +2,7 @@ require 'sinatra'
 require 'twilio-ruby'
 require 'pusher'
 require 'sanitize'
+require 'twilio-ruby/rest/messages'
 
 before do
   # Setup 
