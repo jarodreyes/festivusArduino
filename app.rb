@@ -67,7 +67,7 @@ get '/trick/?' do
   if params['SmsSid'] == nil
     erb :index, :locals => {:msg => output}
   else
-    @picture_url = "http://media.egotvonline.com/wp-content/uploads/2011/11/Funny-Portrait_350x446.jpg"
+    @picture_url = "https://s3-us-west-1.amazonaws.com/jardiohead/festivus.jpg"
     if skip_media
       message = @client.account.messages.create(
         :from => '2024173378',
