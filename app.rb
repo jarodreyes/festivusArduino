@@ -37,7 +37,7 @@ end
 
 get '/trick/?' do
   @phone_number = Sanitize.clean(params[:From])
-  output = "Happy Festivus from the REST of us!"
+  output = "Happy Festivus from the rest of us. $1 worth of food has just been donated to the SF Foodbank!"
   begin
     Pusher['festivus_channel'].trigger('starting:', {:message => 'starting up trick'})
   rescue Pusher::Error => e
